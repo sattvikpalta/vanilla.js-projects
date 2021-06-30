@@ -1,12 +1,72 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <!-- Compiled and minified CSS (Materialize) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Font Awesome for fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Task List</title>
 </head>
+
 <body>
-    
+    <!-- Materialize container class is set to 70% of the window width. It helps center and contain your page content. -->
+    <div class="container">
+        <!-- row class makes a standard 12 column fluid responsive grid for responsive design. -->
+        <div class="row">
+            <!-- col class used to specify no. of cols acquired for the row, s12 - all col or entire row -->
+            <div class="col s12">
+                <!-- card class to make a card -->
+                <div class="card">
+                    <!-- Card contents -->
+                    <div class="card-content">
+                        <!-- Title of the card -->
+                        <span class="card-title">Task List</span>
+                        <div class="row">
+                            <form id="task-form">
+                                <!-- Input field -->
+                                <div class="input-field col s12">
+                                    <input type="text" name="task" id="task">
+                                    <label for="task">New Task</label>
+                                </div>
+                                <input type="submit" value="Add Task" class="btn">
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <h5 id="task-title">Tasks</h5>
+                        <!-- Input field -->
+                        <div class="input-field col s12">
+                            <input type="text" name="filter" id="filter">
+                            <label for="filter">Filter Tasks</label>
+                        </div>
+                        <!-- collection class for an unordered list-->
+                        <ul class="collection"></ul>
+                        <!-- clear-tasks -> user defined class, btn for button and black for color -->
+                        <a href="#" class="clear-tasks btn black">Clear Tasks</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- JQuery (Required by Materialize) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.js"
+        integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+
+    <!-- Compiled and minified JavaScript (Materialize) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <!-- app.js script tag -->
+    <script src="app.js"></script>
 </body>
+
 </html>
