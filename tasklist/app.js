@@ -11,6 +11,8 @@ loadEventListeners();
 function loadEventListeners() {
     // Add task event
     form.addEventListener('submit', addTask);
+    // Remove task
+    tasksList.addEventListener('click', removeTask);
 }
 
 // Add task
@@ -39,4 +41,15 @@ function addTask(e) {
     }
 
     e.preventDefault();
+}
+
+// Remove task
+function removeTask(e) {
+    // classList property returns the class name of an element as a dom token list
+    if (e.target.parentElement.classList.contains('delete-item')) {
+        if (confirm('Are you sure?')) {
+            // target property is used to find out which element triggered a specific event
+            e.target.parentElement.parentElement.remove();
+        }
+    }
 }
