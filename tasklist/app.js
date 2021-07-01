@@ -2,17 +2,54 @@
 const form = document.querySelector('#task-form');
 const taskInput = document.querySelector('#task');
 const filter = document.querySelector('#filter');
-const tasksList = document.querySelector('.collection');
+const taskList = document.querySelector('.collection');
 const clearBtn = document.querySelector('.clear-tasks');
 
 // Load all event listeners
 loadEventListeners();
 
 function loadEventListeners() {
+    // DOM load event
+    document.addEventListener('DOMContentLoaded', getTasks);
     // Add task event
     form.addEventListener('submit', addTask);
     // Remove task
-    tasksList.addEventListener('click', removeTask);
+    taskList.addEventListener('click', removeTask);
+    // Clear all tasks
+    clearBtn.addEventListener('click', clearTasks);
+    // Filter tasks event -> keyup event occurs when a key is released
+    filter.addEventListener('keyup', filterTasks);
+}
+
+// Get tasks from Local Storage
+function getTasks() {
+    let tasks;
+    // If local storage is empty, make an empty array
+    if (localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        // Local storage only stores strings, so it needs to be parsed
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.forEach(function (task) {
+        // Create a task as an 'li' element
+        const li = document.createElement('li');
+        // Add class (all li's in materialize should have this class and ul's should have collection class)
+        li.className = 'collection-item';
+        // Create text node and append to the li
+        li.appendChild(document.createTextNode(task));
+        // Create new link element to delete the added task
+        const link = document.createElement('a');
+        // Add class to link
+        link.className = 'delete-item secondary-content';
+        // Add delete icon in html 
+        link.innerHTML = '<i class="material-icons">clear</i>';
+        // Append the delete icon link to li
+        li.appendChild(link);
+        // Append the li to the ul
+        taskList.appendChild(li);
+    });
 }
 
 // Add task
@@ -30,17 +67,36 @@ function addTask(e) {
         const link = document.createElement('a');
         // Add class to link
         link.className = 'delete-item secondary-content';
-        // Add delete icon in html (fa fa-remove for delete btn)
-        link.innerHTML = '<i class="material-icons">clear</i>'
+        // Add delete icon in html 
+        link.innerHTML = '<i class="material-icons">clear</i>';
         // Append the delete icon link to li
         li.appendChild(link);
         // Append the li to the ul
-        tasksList.appendChild(li);
+        taskList.appendChild(li);
+
+        // Store task in local storage
+        storeTaskInLocalStorage(taskInput.value);
+
         // Clear input field for next task
         taskInput.value = '';
     }
 
     e.preventDefault();
+}
+
+// Store Task
+function storeTaskInLocalStorage(task) {
+    let tasks;
+    // If local storage is empty, make an empty array
+    if (localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        // Local storage only stores strings, so it needs to be parsed
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Remove task
@@ -52,4 +108,33 @@ function removeTask(e) {
             e.target.parentElement.parentElement.remove();
         }
     }
+}
+
+// Clear Tasks
+function clearTasks() {
+    // One way
+    // taskList.innerHTML = '';
+
+    // Faster way
+    while (taskList.firstChild) {
+        taskList.removeChild(taskList.firstChild);
+    }
+}
+
+// Filter tasks
+function filterTasks(e) {
+    // Storing everything a user types in variable text
+    const text = e.target.value.toLowerCase();
+    // Select everything in li
+    document.querySelectorAll('.collection-item').forEach(function (task) {
+        const item = task.firstChild.textContent;
+        // item value in lowercase if not equal to text being input by user will return -1
+        if (item.toLowerCase().indexOf(text) != -1) {
+            // If matches then show task
+            task.style.display = 'block';
+        } else {
+            // If no match then display nothing
+            task.style.display = 'none';
+        }
+    });
 }
