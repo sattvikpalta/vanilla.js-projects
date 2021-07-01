@@ -106,8 +106,31 @@ function removeTask(e) {
         if (confirm('Are you sure?')) {
             // target property is used to find out which element triggered a specific event
             e.target.parentElement.parentElement.remove();
+
+            // Remove from Local Storage
+            removeTaskFromLocalStorage(e.target.parentElement.parentElement);
         }
     }
+}
+
+// Remove from Local Storage
+function removeTaskFromLocalStorage(taskItem) {
+    let tasks;
+    // If local storage is empty, make an empty array
+    if (localStorage.getItem('tasks') === null) {
+        tasks = [];
+    } else {
+        // Local storage only stores strings, so it needs to be parsed
+        tasks = JSON.parse(localStorage.getItem('tasks'));
+    }
+
+    tasks.forEach(function (task, index) {
+        if (taskItem.textContent === task) {
+            tasks.splice(index, 1);
+        }
+    });
+
+    localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Clear Tasks
@@ -119,6 +142,14 @@ function clearTasks() {
     while (taskList.firstChild) {
         taskList.removeChild(taskList.firstChild);
     }
+
+    // Clear from Local Storage
+    clearTasksFromLocalStorage();
+}
+
+// Clear Tasks from Local Storage
+function clearTasksFromLocalStorage() {
+    localStorage.clear();
 }
 
 // Filter tasks
