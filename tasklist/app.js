@@ -115,6 +115,7 @@ function removeTask(e) {
 
 // Remove from Local Storage
 function removeTaskFromLocalStorage(taskItem) {
+    // taskItem.textContent = 'somethingclear'. clear is the icon name included and needs to be removed.
     tskItm = taskItem.textContent.replace('clear', '');
 
     let tasks;
@@ -126,6 +127,7 @@ function removeTaskFromLocalStorage(taskItem) {
         tasks = JSON.parse(localStorage.getItem('tasks'));
     }
 
+    // task -> all items of object tasks and index -> their indices
     tasks.forEach(function (task, index) {
         if (tskItm === task) {
             tasks.splice(index, 1);
