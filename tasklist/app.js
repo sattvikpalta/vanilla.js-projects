@@ -115,6 +115,8 @@ function removeTask(e) {
 
 // Remove from Local Storage
 function removeTaskFromLocalStorage(taskItem) {
+    tskItm = taskItem.textContent.replace('clear', '');
+
     let tasks;
     // If local storage is empty, make an empty array
     if (localStorage.getItem('tasks') === null) {
@@ -125,7 +127,7 @@ function removeTaskFromLocalStorage(taskItem) {
     }
 
     tasks.forEach(function (task, index) {
-        if (taskItem.textContent === task) {
+        if (tskItm === task) {
             tasks.splice(index, 1);
         }
     });
