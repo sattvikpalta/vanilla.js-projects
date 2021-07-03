@@ -22,6 +22,7 @@ UI.prototype.addBookToList = function (book) {
   `;
 
   list.appendChild(row);
+
 }
 
 // Show alert
